@@ -53,7 +53,7 @@ class ConvBlock(nn.Module):
 
 class Generator_pro(nn.Module):
     def __init__(self,z_dim,in_channels,img_channels=3,factors=[1,1,1,1,1/2,1/4,1/8,1/16,1/32]):
-        super().__init__()
+        super(Generator_pro,self).__init__()
         self.initial = nn.Sequential(
             PixelNorm(),
             nn.ConvTranspose2d(z_dim,in_channels,kernel_size=4,stride=1,padding=0), #It take 1*1 -> 4*4

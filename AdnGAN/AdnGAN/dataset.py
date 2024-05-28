@@ -5,10 +5,7 @@ import torchvision
 from torchvision import transforms
 from torchvision.datasets import ImageFolder
 
-default_path = "D:/2A/Projet_PFA/Drive_data/seg"
-
-
-def get_loader(root_dir=default_path, channels_img=1, image_size=256, batch_size=32):
+def get_loader(rot_dir="D:/2A/Projet_PFA/Drive_data/seg", channels_img=1, image_size=256, batch_size=32):
     # Transofrmations
     transform = transforms.Compose(
         [
@@ -23,7 +20,7 @@ def get_loader(root_dir=default_path, channels_img=1, image_size=256, batch_size
     )
 
     class CustomDataset(torch.utils.data.Dataset):
-        def __init__(self, root_dir=root_dir, transform=None):
+        def __init__(self, root_dir=rot_dir, transform=None):
             self.image_folder = ImageFolder(root=root_dir,transform=transform)
             self.transform = transform
 
@@ -35,9 +32,9 @@ def get_loader(root_dir=default_path, channels_img=1, image_size=256, batch_size
             image, label = self.image_folder[idx]
             return image
         
+    #kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+    custom_datasett = CustomDataset(root_dir=rot_dir, transform=transform)
+    dataloader = DataLoader(custom_datasett, batch_size=batch_size, shuffle=True)
 
-    custom_dataset = CustomDataset(root_dir="../Drive_data/seg", transform=transform)
-    dataloader = DataLoader(custom_dataset, batch_size=batch_size, shuffle=True)
 
-
-    return dataloader
+    return dataloader,custom_datasett
